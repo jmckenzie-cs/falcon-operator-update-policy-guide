@@ -1,0 +1,24 @@
+apiVersion: falcon.crowdstrike.com/v1alpha1
+kind: FalconNodeSensor
+metadata:
+  name: falcon-node-sensor
+  namespace: falcon-system
+spec:
+  falconSecret:
+    enabled: true
+    namespace: falcon-system
+    secretName: falcon-api-secret
+  node:
+    advanced:
+      updatePolicy: "YOUR_POLICY_NAME"  # Replace with your Falcon console policy name
+    backend: bpf
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/control-plane
+      operator: Exists
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+  falcon:
+    tags:
+    - "update-policy-managed"

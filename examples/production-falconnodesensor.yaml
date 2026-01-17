@@ -1,0 +1,33 @@
+apiVersion: falcon.crowdstrike.com/v1alpha1
+kind: FalconNodeSensor
+metadata:
+  name: falcon-node-sensor-production
+  namespace: falcon-system
+spec:
+  falconSecret:
+    enabled: true
+    namespace: falcon-system
+    secretName: falcon-api-secret
+  node:
+    advanced:
+      updatePolicy: "k8s-production"  # Production policy name
+    backend: bpf
+    priorityClass: system-node-critical
+    sensorResources:
+      limits:
+        memory: "1Gi"
+        cpu: "500m"
+      requests:
+        memory: "512Mi"
+        cpu: "200m"
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/control-plane
+      operator: Exists
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+  falcon:
+    tags:
+    - "update-policy-managed"
+    - "production"
