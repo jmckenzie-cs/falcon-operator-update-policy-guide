@@ -267,9 +267,26 @@ If sensor doesn't deploy expected version:
 
 ## Cleanup
 
+### For Option 1 (FalconNodeSensor Only)
+
 ```bash
 # Remove node sensor
 kubectl delete falconnodesensor falcon-node-sensor -n falcon-system
+
+# Remove secret and namespace
+kubectl delete secret falcon-api-secret -n falcon-system
+kubectl delete namespace falcon-system
+
+# Remove operator (optional)
+kubectl delete -f https://github.com/CrowdStrike/falcon-operator/releases/latest/download/falcon-operator.yaml
+kubectl delete namespace falcon-operator
+```
+
+### For Option 2 (FalconDeployment Complete Platform)
+
+```bash
+# Remove complete Falcon deployment (this automatically removes all child components)
+kubectl delete falcondeployment falcon-complete-deployment
 
 # Remove secret and namespace
 kubectl delete secret falcon-api-secret -n falcon-system
