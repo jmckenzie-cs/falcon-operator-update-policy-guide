@@ -1,0 +1,29 @@
+apiVersion: falcon.crowdstrike.com/v1alpha1
+kind: FalconDeployment
+metadata:
+  name: falcon-complete-deployment
+spec:
+  falconSecret:
+    enabled: true
+    namespace: falcon-system
+    secretName: falcon-api-secret
+  deployNodeSensor: true           # Falcon Sensor for Linux
+  deployAdmissionController: true  # Kubernetes Admission Controller
+  deployImageAnalyzer: true        # Image Assessment at Runtime
+  deployContainerSensor: false     # Optional container sensor (disabled)
+  falconNodeSensor:
+    node:
+      advanced:
+        updatePolicy: "YOUR_POLICY_NAME"  # Reference your Falcon console policy
+      backend: bpf
+      tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/control-plane
+        operator: Exists
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/master
+        operator: Exists
+    falcon:
+      tags:
+      - "update-policy-managed"
+      - "complete-deployment"

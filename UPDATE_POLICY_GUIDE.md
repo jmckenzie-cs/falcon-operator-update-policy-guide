@@ -86,10 +86,16 @@ stringData:
 EOF
 ```
 
-## Step 4: Deploy Node Sensor with Update Policy
+## Step 4: Choose Your Deployment Option
+
+You have two deployment options:
+
+### Option 1: Node Sensor Only (FalconNodeSensor)
+
+Deploy only the Falcon Node Sensor for basic endpoint protection.
 
 ```bash
-# Deploy node sensor with update policy (replace "your-policy-name" with actual policy name)
+# Deploy node sensor with update policy
 cat <<EOF | kubectl apply -f -
 apiVersion: falcon.crowdstrike.com/v1alpha1
 kind: FalconNodeSensor
@@ -118,7 +124,48 @@ spec:
 EOF
 ```
 
+### Option 2: Complete Falcon Platform (FalconDeployment)
+
+Deploy the complete Falcon platform with Node Sensor + Kubernetes Admission Controller + Image Assessment.
+
+```bash
+# Deploy complete Falcon platform with update policy
+cat <<EOF | kubectl apply -f -
+apiVersion: falcon.crowdstrike.com/v1alpha1
+kind: FalconDeployment
+metadata:
+  name: falcon-complete-deployment
+spec:
+  falconSecret:
+    enabled: true
+    namespace: falcon-system
+    secretName: falcon-api-secret
+  deployNodeSensor: true           # Falcon Sensor for Linux
+  deployAdmissionController: true  # Kubernetes Admission Controller
+  deployImageAnalyzer: true        # Image Assessment at Runtime
+  deployContainerSensor: false     # Optional container sensor (disabled)
+  falconNodeSensor:
+    node:
+      advanced:
+        updatePolicy: "YOUR_POLICY_NAME"  # Reference your Falcon console policy
+      backend: bpf
+      tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/control-plane
+        operator: Exists
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/master
+        operator: Exists
+    falcon:
+      tags:
+      - "update-policy-managed"
+      - "complete-deployment"
+EOF
+```
+
 ## Step 5: Verify Deployment
+
+### For Option 1 (FalconNodeSensor Only)
 
 ```bash
 # Check FalconNodeSensor status
@@ -132,6 +179,25 @@ kubectl get pods -n falcon-system -o wide
 
 # Check for any issues
 kubectl describe falconnodesensor falcon-node-sensor -n falcon-system
+```
+
+### For Option 2 (FalconDeployment Complete Platform)
+
+```bash
+# Check FalconDeployment status
+kubectl get falcondeployment
+
+# Check all Falcon components
+kubectl get falconnodesensor,falconadmission,falconimageanalyzer -A
+
+# Check all deployments and daemonsets
+kubectl get daemonset,deployment -n falcon-system
+
+# Check all pods are running
+kubectl get pods -n falcon-system -o wide
+
+# Check for any issues with the main deployment
+kubectl describe falcondeployment falcon-complete-deployment
 ```
 
 ## Monitoring and Verification

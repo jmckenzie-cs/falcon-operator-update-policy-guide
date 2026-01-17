@@ -4,7 +4,12 @@ A comprehensive guide for deploying CrowdStrike Falcon Operator with Update Poli
 
 ## Overview
 
-This guide provides step-by-step instructions for deploying the CrowdStrike Falcon Operator and Node Sensor using update policies from your Falcon console. Update policies allow you to control exactly which sensor version gets deployed, rather than automatically using the latest available version.
+This guide provides step-by-step instructions for deploying the CrowdStrike Falcon Operator with update policies from your Falcon console. Choose between two deployment options:
+
+- **Option 1**: Node Sensor only (basic endpoint protection)
+- **Option 2**: Complete Falcon platform (Node Sensor + Admission Controller + Image Assessment)
+
+Update policies allow you to control exactly which sensor version gets deployed, rather than automatically using the latest available version.
 
 ## Key Features
 
@@ -20,7 +25,7 @@ This guide provides step-by-step instructions for deploying the CrowdStrike Falc
 2. **Create Update Policy**: In your Falcon console (Host Management → Sensor Updates → Update Policies)
 3. **Deploy Operator**: `kubectl apply -f https://github.com/CrowdStrike/falcon-operator/releases/latest/download/falcon-operator.yaml`
 4. **Create Secret**: With your API credentials using correct field names
-5. **Deploy Node Sensor**: With update policy configuration
+5. **Choose Deployment**: Option 1 (Node Sensor) or Option 2 (Complete Platform)
 
 ## Required API Permissions
 
