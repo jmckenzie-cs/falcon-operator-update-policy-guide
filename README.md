@@ -34,28 +34,6 @@ Your CrowdStrike API client needs these scopes:
 - **[UPDATE_POLICY_GUIDE.md](UPDATE_POLICY_GUIDE.md)** - Complete step-by-step guide
 - **[examples/](examples/)** - Example configurations
 
-## Key Configuration Changes
-
-This guide uses the **correct** configuration for `falconSecret` functionality:
-
-### Secret Field Names
-```yaml
-stringData:
-  falcon-client-id: "YOUR_CLIENT_ID_HERE"      # ✅ Correct
-  falcon-client-secret: "YOUR_CLIENT_SECRET_HERE"  # ✅ Correct
-  # NOT: client_id, client_secret (old format)
-```
-
-### FalconNodeSensor Structure
-```yaml
-spec:
-  falconSecret:           # ✅ Correct
-    enabled: true
-    namespace: falcon-system
-    secretName: falcon-api-secret
-  # NOT: falcon_secret: {name: ...} (old format)
-```
-
 ## Troubleshooting
 
 **Common Issues:**

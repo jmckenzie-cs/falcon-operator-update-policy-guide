@@ -103,7 +103,7 @@ spec:
     secretName: falcon-api-secret
   node:
     advanced:
-      updatePolicy: "k8s"  # Reference your Falcon console policy
+      updatePolicy: "YOUR_POLICY_NAME"  # Reference your Falcon console policy
     backend: bpf
     tolerations:
     - effect: NoSchedule
