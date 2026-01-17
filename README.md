@@ -10,7 +10,7 @@ This guide provides step-by-step instructions for deploying the CrowdStrike Falc
 
 - ✅ **Controlled Updates**: Use specific, tested sensor versions
 - ✅ **Centralized Management**: Policies managed in Falcon console
-- ✅ **Staged Rollouts**: Different policies for different environments
+- ✅ **Staged Rollouts**: Control sensor versions through update policies
 - ✅ **Security**: Proper secret management with `falconSecret` functionality
 - ✅ **Multi-Architecture**: Support for x86_64 and ARM64
 
@@ -32,7 +32,7 @@ Your CrowdStrike API client needs these scopes:
 ## Documentation
 
 - **[UPDATE_POLICY_GUIDE.md](UPDATE_POLICY_GUIDE.md)** - Complete step-by-step guide
-- **[examples/](examples/)** - Example configurations for different environments
+- **[examples/](examples/)** - Example configurations
 
 ## Key Configuration Changes
 

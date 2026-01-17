@@ -1,13 +1,11 @@
 # Example Configurations
 
-This directory contains example YAML files for different deployment scenarios.
+This directory contains example YAML files for deploying the Falcon Node Sensor with update policies.
 
 ## Files
 
 - **[secret.yaml](secret.yaml)** - Kubernetes secret with correct field names for `falconSecret`
 - **[falconnodesensor.yaml](falconnodesensor.yaml)** - Basic FalconNodeSensor configuration
-- **[production-falconnodesensor.yaml](production-falconnodesensor.yaml)** - Production environment with resource limits
-- **[staging-falconnodesensor.yaml](staging-falconnodesensor.yaml)** - Staging environment for testing
 
 ## Usage
 
@@ -21,12 +19,8 @@ This directory contains example YAML files for different deployment scenarios.
    # Create secret
    kubectl apply -f secret.yaml
 
-   # Deploy node sensor (choose one)
+   # Deploy node sensor
    kubectl apply -f falconnodesensor.yaml
-   # OR for production
-   kubectl apply -f production-falconnodesensor.yaml
-   # OR for staging
-   kubectl apply -f staging-falconnodesensor.yaml
    ```
 
 ## Key Configuration Notes

@@ -134,41 +134,6 @@ kubectl get pods -n falcon-system -o wide
 kubectl describe falconnodesensor falcon-node-sensor -n falcon-system
 ```
 
-## Example Configurations
-
-### Production Environment
-```yaml
-spec:
-  falconSecret:
-    enabled: true
-    namespace: falcon-system
-    secretName: falcon-api-secret
-  node:
-    advanced:
-      updatePolicy: "k8s-production"  # Use your production policy name
-    priorityClass: system-node-critical
-    sensorResources:
-      limits:
-        memory: "1Gi"
-        cpu: "500m"
-      requests:
-        memory: "512Mi"
-        cpu: "200m"
-```
-
-### Development Environment
-```yaml
-spec:
-  falconSecret:
-    enabled: true
-    namespace: falcon-system
-    secretName: falcon-api-secret
-  node:
-    advanced:
-      updatePolicy: "k8s-staging"  # Use your staging policy name
-    backend: kernel  # More compatible for testing
-```
-
 ## Monitoring and Verification
 
 ### Check Current Policy and Version
